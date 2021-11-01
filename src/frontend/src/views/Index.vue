@@ -26,21 +26,12 @@
           <div class="content__dough">
             <div class="sheet">
               <h2 class="title title--small sheet__title">Выберите тесто</h2>
-<<<<<<< HEAD
               <div class="sheet__content dough">
                 <label
                   v-for="dough in doughs"
                   :key="dough.id"
                   :class="`dough__input dough__input--${dough.value}`"
                 >
-=======
-              <div
-                v-for="dough in doughs"
-                :key="dough.id"
-                class="sheet__content dough"
-              >
-                <label :class="`dough__input dough__input--${dough.value}`">
->>>>>>> 421a981de66d1c6d5746e730e80d33ce09d6000c
                   <input
                     type="radio"
                     name="dought"
@@ -58,10 +49,6 @@
           <div class="content__diameter">
             <div class="sheet">
               <h2 class="title title--small sheet__title">Выберите размер</h2>
-<<<<<<< HEAD
-=======
-
->>>>>>> 421a981de66d1c6d5746e730e80d33ce09d6000c
               <div class="sheet__content diameter">
                 <template v-for="size in sizes">
                   <label
