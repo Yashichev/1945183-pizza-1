@@ -4,7 +4,7 @@
       type="button"
       class="counter__button counter__button--minus"
       @click="minus"
-      :disabled="c_value == 0"
+      :disabled="selected_value == 0"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -13,13 +13,13 @@
       class="counter__input"
       :name="c_name"
       :price="c_price"
-      :value="c_value"
+      :value="selected_value"
     />
     <button
       type="button"
       class="counter__button counter__button--plus"
       @click="plus"
-      :disabled="c_value > 10"
+      :disabled="selected_value > 10"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -43,31 +43,28 @@ export default {
       default: 0,
     },
   },
-  data() {
-    return {
-      c_value: 0,
-    };
-  },
   methods: {
     minus() {
-      if (this.c_value > 0) {
-        this.c_value--;
-        this.changeIngredient("remove");
+      if (this.selected_value > 0) {
+        let s_val = this.selected_value - 1;
+        this.changeIngredient("remove", s_val);
       }
     },
     plus() {
-      if (this.c_value < 10) {
-        this.c_value++;
-        this.changeIngredient("add");
+      if (this.selected_value < 10) {
+        let s_val = this.selected_value + 1;
+        this.changeIngredient("add", s_val);
       }
     },
-    changeIngredient(type) {
+    changeIngredient(type, s_val) {
+      console.log("-" + type);
+      console.log("-" + s_val);
       this.$emit(
         "changeIngredient",
         {
-          name: this.c_name,
+          value: this.c_name,
           price: this.c_price,
-          count: this.c_value,
+          count: s_val,
         },
         type
       );

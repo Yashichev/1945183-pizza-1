@@ -26,6 +26,7 @@
                   @changeSauces="changeSauces"
                 />
                 <BuilderIngredientsSelector
+                  ref="ingredients_selector"
                   :ingredients="ingredients"
                   @changeIngredients="changeIngredients"
                 />
@@ -45,6 +46,8 @@
               :ingredients="selected_ingredients"
               :sauces="selected_sauces"
               :doughs="selected_doughs"
+              @changeIngredients="changeIngredients"
+              @countIncrement="countIncrement"
             />
             <BuilderPriceCounter :total="price" />
           </div>
@@ -115,18 +118,21 @@ export default {
       if (type == "add") {
         if (this.selected_ingredients.length > 0) {
           if (
-            this.selected_ingredients.findIndex((x) => x.name == result.name) !=
-            -1
+            this.selected_ingredients.findIndex(
+              (x) => x.value == result.value
+            ) != -1
           ) {
             this.selected_ingredients[
-              this.selected_ingredients.findIndex((x) => x.name == result.name)
+              this.selected_ingredients.findIndex(
+                (x) => x.value == result.value
+              )
             ].count = result.count;
           } else {
             this.selected_ingredients.splice(
               this.selected_ingredients.length,
               0,
               {
-                name: result.name,
+                value: result.value,
                 price: result.price,
                 count: result.count,
               }
@@ -137,7 +143,7 @@ export default {
             this.selected_ingredients.length,
             0,
             {
-              name: result.name,
+              value: result.value,
               price: result.price,
               count: result.count,
             }
@@ -148,17 +154,26 @@ export default {
         if (this.selected_ingredients.length > 0) {
           if (result.count == 0) {
             this.selected_ingredients.splice(
-              this.selected_ingredients.findIndex((x) => x.name == result.name),
+              this.selected_ingredients.findIndex(
+                (x) => x.value == result.value
+              ),
               1
             );
           } else {
             this.selected_ingredients[
-              this.selected_ingredients.findIndex((x) => x.name == result.name)
+              this.selected_ingredients.findIndex(
+                (x) => x.value == result.value
+              )
             ].count = result.count;
           }
         }
       }
       this.refresh_price();
+    },
+    countIncrement(result) {
+      if (result.count <= 10) {
+        this.$refs.ingredients_selector.changeIngredient(result, "add");
+      }
     },
     //пересчет общей цены
     refresh_price() {
