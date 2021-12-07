@@ -4,22 +4,22 @@
       type="button"
       class="counter__button counter__button--minus"
       @click="minus"
-      :disabled="selected_value == 0"
+      :disabled="selectedValue == 0"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
     <input
       type="text"
       class="counter__input"
-      :name="c_name"
-      :price="c_price"
-      :value="selected_value"
+      :name="counterName"
+      :price="counterPrice"
+      :value="selectedValue"
     />
     <button
       type="button"
       class="counter__button counter__button--plus"
       @click="plus"
-      :disabled="selected_value > 10"
+      :disabled="selectedValue > 3"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -29,15 +29,15 @@
 export default {
   name: "ItemCounter",
   props: {
-    c_name: {
+    counterName: {
       type: String,
       required: true,
     },
-    c_price: {
+    counterPrice: {
       type: Number,
       default: 0,
     },
-    selected_value: {
+    selectedValue: {
       type: Number,
       required: false,
       default: 0,
@@ -45,25 +45,23 @@ export default {
   },
   methods: {
     minus() {
-      if (this.selected_value > 0) {
-        let s_val = this.selected_value - 1;
+      if (this.selectedValue > 0) {
+        let s_val = this.selectedValue - 1;
         this.changeIngredient("remove", s_val);
       }
     },
     plus() {
-      if (this.selected_value < 10) {
-        let s_val = this.selected_value + 1;
+      if (this.selectedValue < 3) {
+        let s_val = this.selectedValue + 1;
         this.changeIngredient("add", s_val);
       }
     },
     changeIngredient(type, s_val) {
-      console.log("-" + type);
-      console.log("-" + s_val);
       this.$emit(
         "changeIngredient",
         {
-          value: this.c_name,
-          price: this.c_price,
+          value: this.counterName,
+          price: this.counterPrice,
           count: s_val,
         },
         type

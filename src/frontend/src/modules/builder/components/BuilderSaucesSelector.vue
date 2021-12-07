@@ -7,9 +7,9 @@
       class="radio ingredients__input"
     >
       <RadioButton
-        rb_name="sauce"
-        :rb_value="sauce.value"
-        :is_checked="sauce.value == selected_sauces"
+        rbName="sauce"
+        :rbValue="sauce.value"
+        :isChecked="sauce.value == selectedSauces"
         @changeValue="changeSauces"
       />
       <span>{{ sauce.name }}</span>
@@ -26,7 +26,7 @@ export default {
       type: Array,
       required: true,
     },
-    selected_sauces: {
+    selectedSauces: {
       type: String,
       required: true,
     },

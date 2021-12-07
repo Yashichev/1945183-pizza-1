@@ -6,7 +6,7 @@
           <h1 class="title title--big">Конструктор пиццы</h1>
           <BuilderDoughSelector
             :doughs="doughs"
-            :selected_doughs="selected_doughs"
+            :selectedDoughs="selected_doughs"
             @changeDoughs="changeDoughs"
           />
           <BuilderSizeSelector
@@ -22,7 +22,7 @@
               <div class="sheet__content ingredients">
                 <BuilderSaucesSelector
                   :sauces="sauces"
-                  :selected_sauces="selected_sauces"
+                  :selectedSauces="selected_sauces"
                   @changeSauces="changeSauces"
                 />
                 <BuilderIngredientsSelector
@@ -110,6 +110,7 @@ export default {
     },
     changeSize(val) {
       this.selected_size = val;
+      this.refresh_price();
     },
     changeSauces(val) {
       this.selected_sauces = val;
@@ -194,7 +195,10 @@ export default {
         this.doughs[
           this.doughs.findIndex((x) => x.value == this.selected_doughs)
         ].price;
-      this.price = price;
+      let multiplier =
+        this.sizes[this.sizes.findIndex((x) => x.value == this.selected_size)]
+          .multiplier;
+      this.price = multiplier * price;
     },
   },
 };

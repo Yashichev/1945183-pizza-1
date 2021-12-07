@@ -9,10 +9,10 @@
             :key="size.id"
           >
             <RadioButton
-              rb_name="diameter"
-              rb_class="visually-hidden"
-              :rb_value="size.value"
-              :is_checked="size.id == 2"
+              rbName="diameter"
+              rbClass="visually-hidden"
+              :rbValue="size.value"
+              :isChecked="size.id == 2"
               @changeValue="changeSize"
             />
             <span>{{ size.name }}</span>
@@ -32,7 +32,7 @@ export default {
       type: Array,
       required: true,
     },
-    selected_size: {
+    selectedSize: {
       type: String,
       required: false,
     },

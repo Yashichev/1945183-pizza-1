@@ -1,10 +1,10 @@
 <template>
   <input
     type="radio"
-    :name="rb_name"
-    :value="rb_value"
-    :class="rb_class"
-    :checked="is_checked"
+    :name="rbName"
+    :value="rbValue"
+    :class="rbClass"
+    :checked="isChecked"
     @change="changeValue"
   />
 </template>
@@ -12,19 +12,19 @@
 export default {
   name: "RadioButton",
   props: {
-    rb_name: {
+    rbName: {
       type: String,
       required: true,
     },
-    rb_value: {
+    rbValue: {
       type: String,
       required: false,
     },
-    rb_class: {
+    rbClass: {
       type: String,
       required: false,
     },
-    is_checked: {
+    isChecked: {
       type: Boolean,
       default: false,
     },

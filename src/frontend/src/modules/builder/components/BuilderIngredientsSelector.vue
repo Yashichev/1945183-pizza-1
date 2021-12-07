@@ -7,14 +7,14 @@
         :key="ingredient.id"
         class="ingredients__item"
       >
-        <AppDrag :transfer-data="ingredient">
+        <AppDrag :transfer-data="ingredient" :draggable="ingredient.count < 3">
           <span :class="`filling filling--${ingredient.value}`">
             {{ ingredient.name }}
           </span>
           <ItemCounter
-            :c_name="ingredient.value"
-            :c_price="ingredient.price"
-            :selected_value="ingredient.count ? ingredient.count : 0"
+            :counterName="ingredient.value"
+            :counterPrice="ingredient.price"
+            :selectedValue="ingredient.count ? ingredient.count : 0"
             @changeIngredient="changeIngredient"
           />
         </AppDrag>
@@ -24,7 +24,6 @@
 </template>
 <script>
 import ItemCounter from "@/common/components/ItemCounter";
-//import AppDrop from "@/common/components/AppDrop";
 import AppDrag from "@/common/components/AppDrag";
 export default {
   name: "BuilderIngredientsSelector",
@@ -37,8 +36,8 @@ export default {
   },
   data() {
     return {
-      c_name: "",
-      c_price: 0,
+      counterName: "",
+      counterPrice: 0,
     };
   },
   methods: {

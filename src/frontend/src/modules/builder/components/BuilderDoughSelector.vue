@@ -9,10 +9,10 @@
           :class="`dough__input dough__input--${dough.value}`"
         >
           <RadioButton
-            rb_name="dought"
-            rb_class="visually-hidden"
-            :rb_value="dough.value"
-            :is_checked="dough.value == selected_doughs"
+            rbName="dought"
+            rbClass="visually-hidden"
+            :rbValue="dough.value"
+            :isChecked="dough.value == selectedDoughs"
             @changeValue="changeDoughs"
           />
           <b>{{ dough.name }}</b>
@@ -32,7 +32,7 @@ export default {
       type: Array,
       required: true,
     },
-    selected_doughs: {
+    selectedDoughs: {
       type: String,
       default: "light",
     },
