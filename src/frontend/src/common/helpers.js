@@ -43,5 +43,6 @@ export const normalizeIngredients = (ingredients) => {
       typeof nameClass[ingredients.name] != "undefined"
         ? nameClass[ingredients.name]
         : "",
+    count: 0,
   };
 };
