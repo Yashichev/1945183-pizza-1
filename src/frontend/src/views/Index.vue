@@ -47,7 +47,6 @@
               :sauces="selected_sauces"
               :doughs="selected_doughs"
               @changeIngredients="changeIngredients"
-              @countIncrement="countIncrement"
             />
             <BuilderPriceCounter :total="price" />
           </div>
@@ -123,11 +122,17 @@ export default {
               (x) => x.value == result.value
             ) != -1
           ) {
-            this.selected_ingredients[
+            this.selected_ingredients.splice(
               this.selected_ingredients.findIndex(
                 (x) => x.value == result.value
-              )
-            ].count = result.count;
+              ),
+              0,
+              {
+                value: result.value,
+                price: result.price,
+                count: result.count,
+              }
+            );
           } else {
             this.selected_ingredients.splice(
               this.selected_ingredients.length,
@@ -160,30 +165,34 @@ export default {
               ),
               1
             );
-          } else {
-            this.selected_ingredients[
+          } else if (result.count == 1) {
+            this.selected_ingredients.splice(
               this.selected_ingredients.findIndex(
-                (x) => x.value == result.value
-              )
-            ].count = result.count;
+                (x) => x.value == result.value && x.count == 2
+              ),
+              1
+            );
+          } else if (result.count == 2) {
+            this.selected_ingredients.splice(
+              this.selected_ingredients.findIndex(
+                (x) => x.value == result.value && x.count == 3
+              ),
+              1
+            );
           }
         }
       }
+      this.ingredients[
+        this.ingredients.findIndex((x) => x.value == result.value)
+      ].count = result.count;
       this.refresh_price();
-    },
-    countIncrement(result) {
-      if (result.count <= 10) {
-        this.$refs.ingredients_selector.changeIngredient(result, "add");
-      }
     },
     //пересчет общей цены
     refresh_price() {
       let price = 0;
       //считаем цену ингридиентов
       for (let i = 0; i < this.selected_ingredients.length; i++) {
-        price +=
-          this.selected_ingredients[i].count *
-          this.selected_ingredients[i].price;
+        price += this.selected_ingredients[i].price;
       }
       //считаем цену соуса
       price +=

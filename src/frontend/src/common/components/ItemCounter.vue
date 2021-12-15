@@ -11,6 +11,7 @@
     <input
       type="text"
       class="counter__input"
+      readonly
       :name="counterName"
       :price="counterPrice"
       :value="selectedValue"

@@ -6,7 +6,7 @@
           <div
             v-for="ingredient in ingredients"
             v-bind:key="ingredient.name"
-            :class="`pizza__filling pizza__filling--${ingredient.value}`"
+            :class="detectClass(ingredient)"
           />
         </div>
       </div>
@@ -33,15 +33,23 @@ export default {
     },
   },
   methods: {
+    detectClass(item) {
+      let endClass = "";
+      if (item.count == 2) {
+        endClass = " pizza__filling--second";
+      } else if (item.count == 3) {
+        endClass = " pizza__filling--third";
+      }
+      return "pizza__filling pizza__filling--" + item.value + endClass;
+    },
     moveIngredient(result) {
       result = {
         name: result.name,
         price: result.price,
         value: result.value,
-        count: 1,
+        count: result.count + 1,
       };
       this.$emit("changeIngredients", result, "add");
-      this.$emit("countIncrement", result);
     },
   },
 };

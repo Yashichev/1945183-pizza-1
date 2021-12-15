@@ -7,7 +7,10 @@
         :key="ingredient.id"
         class="ingredients__item"
       >
-        <AppDrag :transfer-data="ingredient" :draggable="ingredient.count < 3">
+        <AppDrag
+          :transfer-data="ingredient"
+          :draggable="!ingredient.count || ingredient.count < 3"
+        >
           <span :class="`filling filling--${ingredient.value}`">
             {{ ingredient.name }}
           </span>
@@ -43,7 +46,7 @@ export default {
   methods: {
     changeIngredient(result, type) {
       this.$emit("changeIngredients", result, type);
-      if (
+      /*if (
         this.ingredients[
           this.ingredients.findIndex((x) => x.value == result.value)
         ].count
@@ -69,7 +72,7 @@ export default {
         this.ingredients[
           this.ingredients.findIndex((x) => x.value == result.value)
         ].count = 1;
-      }
+      }*/
     },
   },
 };
