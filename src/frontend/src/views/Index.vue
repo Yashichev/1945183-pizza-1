@@ -48,7 +48,7 @@
               :doughs="selected_doughs"
               @changeIngredients="changeIngredients"
             />
-            <BuilderPriceCounter :total="price" />
+            <BuilderPriceCounter :total="com_price" />
           </div>
         </div>
       </form>
@@ -98,10 +98,28 @@ export default {
       sizes: pizza.sizes.map((size) => normalizeSize(size)),
     };
   },
-  mounted: function () {
-    this.$nextTick(function () {
-      this.refresh_price();
-    });
+  computed: {
+    com_price() {
+      let mprice = 0;
+      //считаем цену ингридиентов
+      for (let i = 0; i < this.selected_ingredients.length; i++) {
+        mprice += this.selected_ingredients[i].price;
+      }
+      //считаем цену соуса
+      mprice +=
+        this.sauces[
+          this.sauces.findIndex((x) => x.value == this.selected_sauces)
+        ].price;
+      //считаем цену теста
+      mprice +=
+        this.doughs[
+          this.doughs.findIndex((x) => x.value == this.selected_doughs)
+        ].price;
+      let multiplier =
+        this.sizes[this.sizes.findIndex((x) => x.value == this.selected_size)]
+          .multiplier;
+      return multiplier * mprice;
+    },
   },
   methods: {
     changeDoughs(val) {
@@ -109,7 +127,6 @@ export default {
     },
     changeSize(val) {
       this.selected_size = val;
-      this.refresh_price();
     },
     changeSauces(val) {
       this.selected_sauces = val;
@@ -185,29 +202,6 @@ export default {
       this.ingredients[
         this.ingredients.findIndex((x) => x.value == result.value)
       ].count = result.count;
-      this.refresh_price();
-    },
-    //пересчет общей цены
-    refresh_price() {
-      let price = 0;
-      //считаем цену ингридиентов
-      for (let i = 0; i < this.selected_ingredients.length; i++) {
-        price += this.selected_ingredients[i].price;
-      }
-      //считаем цену соуса
-      price +=
-        this.sauces[
-          this.sauces.findIndex((x) => x.value == this.selected_sauces)
-        ].price;
-      //считаем цену теста
-      price +=
-        this.doughs[
-          this.doughs.findIndex((x) => x.value == this.selected_doughs)
-        ].price;
-      let multiplier =
-        this.sizes[this.sizes.findIndex((x) => x.value == this.selected_size)]
-          .multiplier;
-      this.price = multiplier * price;
     },
   },
 };

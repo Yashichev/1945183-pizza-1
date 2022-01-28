@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <AppLayout />
-    <IndexPizza />
+    <component :is="appLayout" />
   </div>
 </template>
 
 <script>
-import AppLayout from "@/layouts/AppLayout";
-import IndexPizza from "@/views/Index";
+const defaultLayout = "AppLayoutDefault";
 export default {
   name: "App",
-  components: {
-    AppLayout,
-    IndexPizza,
+  computed: {
+    appLayout() {
+      console.log(this.$route.meta.layout);
+      const layout = this.$route.meta.layout || defaultLayout;
+      return () => import(`@/layouts/${layout}.vue`);
+    },
   },
 };
 </script>
