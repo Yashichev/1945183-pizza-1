@@ -28,14 +28,13 @@
 <script>
 import ItemCounter from "@/common/components/ItemCounter";
 import AppDrag from "@/common/components/AppDrag";
+//import { SET_ENTITY } from "@/store/mutations-types";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "BuilderIngredientsSelector",
   components: { ItemCounter, AppDrag },
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["ingredients"]),
   },
   data() {
     return {
@@ -44,35 +43,35 @@ export default {
     };
   },
   methods: {
+    ...mapActions("Builder", [
+      "addIngredient",
+      "removeIngredient",
+      "deleteIngredient",
+    ]),
+    /*...mapMutations({ changeSelectedSauces: SET_ENTITY }),
+    changeSauces(value) {
+      this.changeSelectedSauces({
+        module: null,
+        entity: "selectedSauces",
+        value: value,
+      });
+    },*/
+
     changeIngredient(result, type) {
-      this.$emit("changeIngredients", result, type);
-      /*if (
-        this.ingredients[
-          this.ingredients.findIndex((x) => x.value == result.value)
-        ].count
-      ) {
-        if (type == "add") {
-          this.ingredients[
-            this.ingredients.findIndex((x) => x.value == result.value)
-          ].count++;
-        } else {
-          this.ingredients[
-            this.ingredients.findIndex((x) => x.value == result.value)
-          ].count--;
-        }
-      } else {
-        let index = this.ingredients.findIndex((x) => x.value == result.value);
-        this.ingredients.splice(index, 1, {
-          name: this.ingredients[index].name,
-          price: this.ingredients[index].price,
-          image: this.ingredients[index].image,
-          value: this.ingredients[index].value,
-          count: 1,
+      //console.log(result);
+      if (type == "add") {
+        this.addIngredient({
+          module: "Builder",
+          entity: "selectedIngredients",
+          value: result,
         });
-        this.ingredients[
-          this.ingredients.findIndex((x) => x.value == result.value)
-        ].count = 1;
-      }*/
+      } else if (type == "remove") {
+        this.removeIngredient({
+          module: "Builder",
+          entity: "selectedIngredients",
+          value: result,
+        });
+      }
     },
   },
 };

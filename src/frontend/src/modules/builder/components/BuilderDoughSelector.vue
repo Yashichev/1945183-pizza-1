@@ -24,22 +24,22 @@
 </template>
 <script>
 import RadioButton from "@/common/components/RadioButton";
+import { SET_ENTITY } from "@/store/mutations-types";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "BuilderDoughSelector",
   components: { RadioButton },
-  props: {
-    doughs: {
-      type: Array,
-      required: true,
-    },
-    selectedDoughs: {
-      type: String,
-      default: "light",
-    },
+  computed: {
+    ...mapState(["doughs", "selectedDoughs"]),
   },
   methods: {
+    ...mapMutations({ changeSelectedDoughs: SET_ENTITY }),
     changeDoughs(value) {
-      this.$emit("changeDoughs", value);
+      this.changeSelectedDoughs({
+        module: null,
+        entity: "selectedDoughs",
+        value: value,
+      });
     },
   },
 };

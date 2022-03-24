@@ -15,21 +15,20 @@
 </template>
 <script>
 import AppDrop from "@/common/components/AppDrop";
+import { mapState } from "vuex";
 export default {
   name: "BuilderPizzaView",
   components: { AppDrop },
+  computed: {
+    ...mapState({
+      sauces: "selectedSauces",
+      doughs: "selectedDouhs",
+    }),
+  },
   props: {
     ingredients: {
       type: Array,
       default: () => [],
-    },
-    sauces: {
-      type: String,
-      required: true,
-    },
-    doughs: {
-      type: String,
-      required: true,
     },
   },
   methods: {

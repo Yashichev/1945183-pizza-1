@@ -18,22 +18,22 @@
 </template>
 <script>
 import RadioButton from "@/common/components/RadioButton";
+import { SET_ENTITY } from "@/store/mutations-types";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "BuilderSaucesSelector",
   components: { RadioButton },
-  props: {
-    sauces: {
-      type: Array,
-      required: true,
-    },
-    selectedSauces: {
-      type: String,
-      required: true,
-    },
+  computed: {
+    ...mapState(["sauces", "selectedSauces"]),
   },
   methods: {
+    ...mapMutations({ changeSelectedSauces: SET_ENTITY }),
     changeSauces(value) {
-      this.$emit("changeSauces", value);
+      this.changeSelectedSauces({
+        module: null,
+        entity: "selectedSauces",
+        value: value,
+      });
     },
   },
 };

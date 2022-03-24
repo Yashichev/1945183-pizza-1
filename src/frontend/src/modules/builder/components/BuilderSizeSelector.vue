@@ -12,7 +12,7 @@
               rbName="diameter"
               rbClass="visually-hidden"
               :rbValue="size.value"
-              :isChecked="size.id == 2"
+              :isChecked="size.id == selectedSizes"
               @changeValue="changeSize"
             />
             <span>{{ size.name }}</span>
@@ -24,22 +24,22 @@
 </template>
 <script>
 import RadioButton from "@/common/components/RadioButton";
+import { SET_ENTITY } from "@/store/mutations-types";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "BuilderSizeSelector",
   components: { RadioButton },
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
-    selectedSize: {
-      type: String,
-      required: false,
-    },
+  computed: {
+    ...mapState(["sizes", "selectedSizes"]),
   },
   methods: {
+    ...mapMutations({ changeSelectedSizes: SET_ENTITY }),
     changeSize(value) {
-      this.$emit("changeSize", value);
+      this.changeSelectedSizes({
+        module: null,
+        entity: "selectedSizes",
+        value: value,
+      });
     },
   },
 };
